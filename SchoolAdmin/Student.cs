@@ -11,7 +11,7 @@ namespace SchoolAdmin
         public string Naam;
         public DateTime GeboorteDatum;
         public uint Studentennummer;
-        public string[] Cursussen = new string[5];
+        private string[] cursussen = new string[5];
         public static uint Studententeller = 1;
 
         public string GenereerNaamKaartje()
@@ -23,15 +23,27 @@ namespace SchoolAdmin
         {
             double totaal = 0.0;
 
-            for (int i = 0; i < Cursussen.Length; i++)
+            for (int i = 0; i < this.cursussen.Length; i++)
             {
-                if (Cursussen[i] is not null)
+                if (this.cursussen[i] is not null)
                 {
                     totaal += 10;
                 }
             }
 
             return totaal;
+        }
+
+        public void RegistreerVoorCursus(string cursus)
+        {
+            for (int i = 0; i < this.cursussen.Length; i++)
+            {
+                if (this.cursussen[i] is null)
+                {
+                    cursussen[i] = cursus;
+                    break;
+                }
+            }
         }
     }
 }
