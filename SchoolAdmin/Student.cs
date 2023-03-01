@@ -11,7 +11,27 @@ namespace SchoolAdmin
         public string Naam;
         public DateTime GeboorteDatum;
         public uint Studentennummer;
-        public string[] Cursussen;
-        public static uint Studententeller = 14378;
+        public string[] Cursussen = new string[5];
+        public static uint Studententeller = 1;
+
+        public string GenereerNaamKaartje()
+        {
+            return $"{this.Naam} (STUDENT)";
+        }
+
+        public double BepaalWerkbelasting()
+        {
+            double totaal = 0.0;
+
+            for (int i = 0; i < Cursussen.Length; i++)
+            {
+                if (Cursussen[i] is not null)
+                {
+                    totaal += 10;
+                }
+            }
+
+            return totaal;
+        }
     }
 }
