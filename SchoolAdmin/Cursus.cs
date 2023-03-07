@@ -16,7 +16,10 @@ namespace SchoolAdmin
             Console.WriteLine($"{Titel}:");
             foreach (Student student in this.Studenten)
             {
-                Console.WriteLine(student.Naam);
+                if (student is not null)
+                {
+                    Console.WriteLine($"- {student.Naam}");
+                }
             }
             Console.WriteLine();
         }
@@ -37,21 +40,15 @@ namespace SchoolAdmin
 
             Student said = new Student();
             said.Naam = "Said Aziz";
-            said.RegistreerVoorCursus("Communicatie");
-            said.CursusResultaten[0] = 12;
-            said.RegistreerVoorCursus("Programmeren");
-            said.CursusResultaten[1] = 15;
-            said.RegistreerVoorCursus("Webtechnologie");
-            said.CursusResultaten[2] = 13;
+            said.RegistreerCursusResultaat("Communicatie", 12);
+            said.RegistreerCursusResultaat("Programmeren", 15);
+            said.RegistreerCursusResultaat("Webtechnologie", 13);
 
             Student mieke = new Student();
             mieke.Naam = "Mieke Vermeulen";
-            mieke.RegistreerVoorCursus("Communicatie");
-            mieke.CursusResultaten[0] = 14;
-            mieke.RegistreerVoorCursus("Databanken");
-            mieke.CursusResultaten[1] = 11;
-            mieke.RegistreerVoorCursus("Programmeren");
-            mieke.CursusResultaten[2] = 8;
+            mieke.RegistreerCursusResultaat("Communicatie", 14);
+            mieke.RegistreerCursusResultaat("Databanken", 11);
+            mieke.RegistreerCursusResultaat("Programmeren", 8);
 
             communicatie.Studenten[0] = said;
             communicatie.Studenten[1] = mieke;
