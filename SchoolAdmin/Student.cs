@@ -95,29 +95,29 @@ namespace SchoolAdmin
 
         public static void DemonstreerStudenten()
         {
-            Student student1 = new Student();
-            student1.GeboorteDatum = new DateTime(2001, 1, 3);
-            student1.Naam = "Said Aziz";
-            student1.RegistreerVoorCursus("Communicatie");
-            student1.CursusResultaten[0] = 12;
-            student1.RegistreerVoorCursus("Programmeren");
-            student1.CursusResultaten[1] = 15;
-            student1.RegistreerVoorCursus("Webtechnologie");
-            student1.CursusResultaten[2] = 13;
-            student1.ToonOverzicht();
+            Student said = new Student();
+            said.GeboorteDatum = new DateTime(2001, 1, 3);
+            said.Naam = "Said Aziz";
+            said.RegistreerVoorCursus("Communicatie");
+            said.CursusResultaten[0] = 12;
+            said.RegistreerVoorCursus("Programmeren");
+            said.CursusResultaten[1] = 15;
+            said.RegistreerVoorCursus("Webtechnologie");
+            said.CursusResultaten[2] = 13;
+            said.ToonOverzicht();
 
-            Student student2 = new Student();
-            student2.GeboorteDatum = new DateTime(1996, 4, 23);
-            student2.Naam = "Mieke Vermeulen";
-            student2.RegistreerVoorCursus("Webontwikkeling");
-            student2.CursusResultaten[0] = 14;
-            student2.RegistreerVoorCursus("IT Project");
-            student2.CursusResultaten[1] = 11;
-            student2.RegistreerVoorCursus("IT Essentials");
-            student2.CursusResultaten[2] = 8;
-            student2.RegistreerVoorCursus("Programmeren Intro");
-            student2.CursusResultaten[3] = 18;
-            student2.ToonOverzicht();
+            Student mieke = new Student();
+            mieke.GeboorteDatum = new DateTime(1996, 4, 23);
+            mieke.Naam = "Mieke Vermeulen";
+            mieke.RegistreerVoorCursus("Webontwikkeling");
+            mieke.CursusResultaten[0] = 14;
+            mieke.RegistreerVoorCursus("IT Project");
+            mieke.CursusResultaten[1] = 11;
+            mieke.RegistreerVoorCursus("IT Essentials");
+            mieke.CursusResultaten[2] = 8;
+            mieke.RegistreerVoorCursus("Programmeren Intro");
+            mieke.CursusResultaten[3] = 18;
+            mieke.ToonOverzicht();
         }
     }
 }
