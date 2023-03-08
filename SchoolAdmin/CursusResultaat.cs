@@ -8,7 +8,36 @@ namespace SchoolAdmin
 {
     internal class CursusResultaat
     {
-        public string Naam;
-        public byte Resultaat;
+        private readonly string naam;
+        private byte resultaat;
+
+        public string Naam
+        {
+            get
+            {
+                return naam;
+            }
+        }
+
+        public byte Resultaat
+        {
+            get
+            {
+                return resultaat;
+            }
+            set
+            {
+                if (value >= 0 && value <= 20)
+                {
+                    resultaat = value;
+                }
+            }
+        }
+
+        public CursusResultaat(string cursusNaam, byte resultaat)
+        {
+            this.naam = cursusNaam;
+            this.Resultaat = resultaat;
+        }
     }
 }

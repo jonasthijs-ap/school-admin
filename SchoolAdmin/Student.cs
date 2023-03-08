@@ -70,9 +70,7 @@ namespace SchoolAdmin
             {
                 if (cursusResultaten[i] is null)
                 {
-                    cursusResultaten[i] = new CursusResultaat();
-                    cursusResultaten[i].Naam = cursusNaam;
-                    cursusResultaten[i].Resultaat = cijfer;
+                    cursusResultaten[i] = new CursusResultaat(cursusNaam, cijfer);
                     break;
                 }
             }
