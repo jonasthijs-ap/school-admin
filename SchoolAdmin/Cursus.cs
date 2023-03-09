@@ -9,9 +9,10 @@ namespace SchoolAdmin
     internal class Cursus
     {
         private int id;
-        public Student[] Studenten = new Student[2];
-        public string Titel;
+        public Student[] Studenten;
+        private readonly string titel;
         private static int maxId = 1;
+        private byte studiepunten;
 
         public int Id
         {
@@ -21,15 +22,43 @@ namespace SchoolAdmin
             }
         }
 
-        public Cursus()
+        public string Titel
         {
+            get
+            {
+                return this.titel;
+            }
+        }
+
+        public byte Studiepunten
+        {
+            get
+            {
+                return this.studiepunten;
+            }
+            private set
+            {
+                this.studiepunten = value;
+            }
+        }
+
+        public Cursus(string cursusNaam, byte aantalStudenten, byte studiepunten)
+        {
+            this.titel = cursusNaam;
+            this.Studiepunten = studiepunten;
+            this.Studenten = new Student[aantalStudenten];
+
             this.id = maxId;
             maxId++;
         }
 
+        public Cursus(string cursusNaam, byte studiepunten) : this(cursusNaam: cursusNaam, aantalStudenten: 2, studiepunten: studiepunten) { }
+
+        public Cursus(string cursusNaam) : this(cursusNaam: cursusNaam, aantalStudenten: 2, studiepunten: 3) { }
+
         public void ToonOverzicht()
         {
-            Console.WriteLine($"{Titel} ({this.Id}):");
+            Console.WriteLine($"{Titel} (#{Id} - {Studiepunten} stp):");
             foreach (Student student in this.Studenten)
             {
                 if (student is not null)
@@ -42,17 +71,13 @@ namespace SchoolAdmin
 
         public static void DemonstreerCursussen()
         {
-            Cursus communicatie = new Cursus();
-            communicatie.Titel = "Communicatie";
+            Cursus communicatie = new Cursus("Communicatie");
 
-            Cursus programmeren = new Cursus();
-            programmeren.Titel = "Programmeren";
+            Cursus programmeren = new Cursus("Programmeren", 6);
 
-            Cursus webtechnologie = new Cursus();
-            webtechnologie.Titel = "Webtechnologie";
+            Cursus webtechnologie = new Cursus("Webtechnologie", 5, 6);
 
-            Cursus databanken = new Cursus();
-            databanken.Titel = "Databanken";
+            Cursus databanken = new Cursus("Databanken", 7, 5);
 
             Student said = new Student();
             said.Naam = "Said Aziz";
