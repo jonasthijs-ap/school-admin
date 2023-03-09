@@ -8,12 +8,28 @@ namespace SchoolAdmin
 {
     internal class Cursus
     {
+        private int id;
         public Student[] Studenten = new Student[2];
         public string Titel;
+        private static int maxId = 1;
+
+        public int Id
+        {
+            get
+            {
+                return this.id;
+            }
+        }
+
+        public Cursus()
+        {
+            this.id = maxId;
+            maxId++;
+        }
 
         public void ToonOverzicht()
         {
-            Console.WriteLine($"{Titel}:");
+            Console.WriteLine($"{Titel} ({this.Id}):");
             foreach (Student student in this.Studenten)
             {
                 if (student is not null)
