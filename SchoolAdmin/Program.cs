@@ -4,9 +4,7 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Wat wil je doen?");
-            Console.WriteLine("1. DemonstreerStudenten uitvoeren");
-            Console.WriteLine("2. DemonstreerCursussen uitvoeren");
+            Console.WriteLine("Wat wil je demonstreren?\n\t1. Studenten\n\t2. Cursussen\n\t3. StudentUitTekst");
             byte choice = Convert.ToByte(Console.ReadLine());
 
             switch (choice)
@@ -16,6 +14,9 @@
                     break;
                 case 2:
                     Cursus.DemonstreerCursussen();
+                    break;
+                case 3:
+                    Student.DemonstreerStudentUitTekst();
                     break;
             }
         }

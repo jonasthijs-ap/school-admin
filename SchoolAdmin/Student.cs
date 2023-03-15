@@ -92,6 +92,21 @@ namespace SchoolAdmin
             Console.WriteLine($"Gemiddelde:".PadRight(26) + $"{Math.Round(Gemiddelde(cursusResultaten), 1)}\n");
         }
 
+        public static Student StudentUitTekstFormaat(string csvWaarde)
+        {
+            string[] studentInfo = csvWaarde.Split(';');
+            Student student = new Student();
+            student.Naam = studentInfo[0];
+            student.GeboorteDatum = new DateTime(Convert.ToInt32(studentInfo[3]), Convert.ToInt32(studentInfo[2]), Convert.ToInt32(studentInfo[1]));
+
+            for (byte i = 4; i < studentInfo.Length; i += 2)
+            {
+                student.RegistreerCursusResultaat(studentInfo[i], Convert.ToByte(studentInfo[i + 1]));
+            }
+
+            return student;
+        }
+
         public static void DemonstreerStudenten()
         {
             Student said = new Student();
@@ -110,6 +125,14 @@ namespace SchoolAdmin
             mieke.RegistreerCursusResultaat("IT Essentials", 8);
             mieke.RegistreerCursusResultaat("Programmeren Intro", 18);
             mieke.ToonOverzicht();
+        }
+
+        public static void DemonstreerStudentUitTekst()
+        {
+            Console.WriteLine("Geef de tekstvoorstelling van een student:");
+            string csvWaarde = Console.ReadLine();
+            Student student = StudentUitTekstFormaat(csvWaarde);
+            student.ToonOverzicht();
         }
     }
 }
