@@ -11,8 +11,9 @@ namespace SchoolAdmin
         private int id;
         public Student[] Studenten;
         private string titel;
-        private static int maxId = 1;
         private byte studiepunten;
+        private static int maxId = 1;
+        private static Cursus[] alleCursussen = new Cursus[10];
 
         public int Id
         {
@@ -42,6 +43,14 @@ namespace SchoolAdmin
             }
         }
 
+        public static Cursus[] AlleCursussen
+        {
+            get
+            {
+                return alleCursussen;
+            }
+        }
+
         public Cursus(string cursusNaam, byte aantalStudenten, byte studiepunten)
         {
             this.titel = cursusNaam;
@@ -50,11 +59,35 @@ namespace SchoolAdmin
 
             this.id = maxId;
             maxId++;
+
+            registreerCursus(this);
         }
 
         public Cursus(string cursusNaam, byte studiepunten) : this(cursusNaam: cursusNaam, aantalStudenten: 2, studiepunten: studiepunten) { }
 
         public Cursus(string cursusNaam) : this(cursusNaam: cursusNaam, aantalStudenten: 2, studiepunten: 3) { }
+
+        private static void registreerCursus(Cursus cursus)
+        {
+            int? vrijePositie = null;
+
+            for (int i = 0; i < alleCursussen.Length; i++)
+            {
+                if (alleCursussen[i] is null && vrijePositie is not null)
+                {
+                    vrijePositie = i;
+                }
+            }
+
+            if (vrijePositie is not null)
+            {
+                alleCursussen[(int) vrijePositie] = cursus;
+            }
+            else
+            {
+                Console.WriteLine("Er zijn geen vrije posities meer");
+            }
+        }
 
         public void ToonOverzicht()
         {
