@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace SchoolAdmin
 {
-    internal class CursusResultaat
+    internal class VakInschrijving
     {
-        private readonly string naam;
-        private byte resultaat;
+        private string naam;
+        private byte? resultaat;
 
         public string Naam
         {
@@ -19,7 +19,7 @@ namespace SchoolAdmin
             }
         }
 
-        public byte Resultaat
+        public byte? Resultaat
         {
             get
             {
@@ -27,14 +27,14 @@ namespace SchoolAdmin
             }
             set
             {
-                if (value >= 0 && value <= 20)
+                if (value is not null || value >= 0 && value <= 20)
                 {
                     resultaat = value;
                 }
             }
         }
 
-        public CursusResultaat(string cursusNaam, byte resultaat)
+        public VakInschrijving(string cursusNaam, byte? resultaat)
         {
             this.naam = cursusNaam;
             this.Resultaat = resultaat;

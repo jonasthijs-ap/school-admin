@@ -10,7 +10,7 @@ namespace SchoolAdmin
     {
         private int id;
         public Student[] Studenten;
-        private readonly string titel;
+        private string titel;
         private static int maxId = 1;
         private byte studiepunten;
 
@@ -72,24 +72,21 @@ namespace SchoolAdmin
         public static void DemonstreerCursussen()
         {
             Cursus communicatie = new Cursus("Communicatie");
-
             Cursus programmeren = new Cursus("Programmeren", 6);
-
             Cursus webtechnologie = new Cursus("Webtechnologie", 5, 6);
-
             Cursus databanken = new Cursus("Databanken", 7, 5);
 
-            Student said = new Student();
-            said.Naam = "Said Aziz";
+            Student said = new Student("Said Aziz", new DateTime(2001, 1, 3));
             said.RegistreerCursusResultaat("Communicatie", 12);
-            said.RegistreerCursusResultaat("Programmeren", 15);
+            said.RegistreerCursusResultaat("Programmeren", null);
             said.RegistreerCursusResultaat("Webtechnologie", 13);
+            said.ToonOverzicht();
 
-            Student mieke = new Student();
-            mieke.Naam = "Mieke Vermeulen";
-            mieke.RegistreerCursusResultaat("Communicatie", 14);
-            mieke.RegistreerCursusResultaat("Databanken", 11);
-            mieke.RegistreerCursusResultaat("Programmeren", 8);
+            Student mieke = new Student("Mieke Vermeulen", new DateTime(1996, 4, 23));
+            mieke.RegistreerCursusResultaat("Communicatie", 13);
+            mieke.RegistreerCursusResultaat("Databanken", null);
+            mieke.RegistreerCursusResultaat("Programmeren", 14);
+            mieke.ToonOverzicht();
 
             communicatie.Studenten[0] = said;
             communicatie.Studenten[1] = mieke;

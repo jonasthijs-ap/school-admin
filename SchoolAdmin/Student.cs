@@ -8,11 +8,17 @@ namespace SchoolAdmin
 {
     internal class Student
     {
-        private CursusResultaat[] cursusResultaten = new CursusResultaat[5];
+        private VakInschrijving[] cursusResultaten = new VakInschrijving[5];
         public string Naam;
         public DateTime GeboorteDatum;
         public uint Studentennummer;
         public static uint Studententeller = 1;
+
+        public Student(string naam, DateTime geboorteDatum)
+        {
+            this.Naam = naam;
+            this.GeboorteDatum = geboorteDatum;
+        }
 
         public byte BepaalWerkbelasting()
         {
@@ -29,7 +35,7 @@ namespace SchoolAdmin
             return totaal;
         }
 
-        public double Gemiddelde(CursusResultaat[] resultaten)
+        public double Gemiddelde(VakInschrijving[] resultaten)
         {
             double gemiddelde = 0.0;
             byte aantalCursussen = 0;
@@ -64,13 +70,13 @@ namespace SchoolAdmin
             }
         }
 
-        public void RegistreerCursusResultaat(string cursusNaam, byte cijfer)
+        public void RegistreerCursusResultaat(string cursusNaam, byte? cijfer)
         {
             for (int i = 0; i < cursusResultaten.Length; i++)
             {
                 if (cursusResultaten[i] is null)
                 {
-                    cursusResultaten[i] = new CursusResultaat(cursusNaam, cijfer);
+                    cursusResultaten[i] = new VakInschrijving(cursusNaam, cijfer);
                     break;
                 }
             }
@@ -95,9 +101,7 @@ namespace SchoolAdmin
         public static Student StudentUitTekstFormaat(string csvWaarde)
         {
             string[] studentInfo = csvWaarde.Split(';');
-            Student student = new Student();
-            student.Naam = studentInfo[0];
-            student.GeboorteDatum = new DateTime(Convert.ToInt32(studentInfo[3]), Convert.ToInt32(studentInfo[2]), Convert.ToInt32(studentInfo[1]));
+            Student student = new Student(studentInfo[0], new DateTime(Convert.ToInt32(studentInfo[3]), Convert.ToInt32(studentInfo[2]), Convert.ToInt32(studentInfo[1])));
 
             for (byte i = 4; i < studentInfo.Length; i += 2)
             {
@@ -109,21 +113,16 @@ namespace SchoolAdmin
 
         public static void DemonstreerStudenten()
         {
-            Student said = new Student();
-            said.GeboorteDatum = new DateTime(2001, 1, 3);
-            said.Naam = "Said Aziz";
+            Student said = new Student("Said Aziz", new DateTime(2001, 1, 3));
             said.RegistreerCursusResultaat("Communicatie", 12);
             said.RegistreerCursusResultaat("Programmeren", 15);
             said.RegistreerCursusResultaat("Webtechnologie", 13);
             said.ToonOverzicht();
 
-            Student mieke = new Student();
-            mieke.GeboorteDatum = new DateTime(1996, 4, 23);
-            mieke.Naam = "Mieke Vermeulen";
-            mieke.RegistreerCursusResultaat("Webontwikkeling", 14);
-            mieke.RegistreerCursusResultaat("IT Project", 11);
-            mieke.RegistreerCursusResultaat("IT Essentials", 8);
-            mieke.RegistreerCursusResultaat("Programmeren Intro", 18);
+            Student mieke = new Student("Mieke Vermeulen", new DateTime(1996, 4, 23));
+            mieke.RegistreerCursusResultaat("Communicatie", 13);
+            mieke.RegistreerCursusResultaat("Databanken", 16);
+            mieke.RegistreerCursusResultaat("Programmeren", 14);
             mieke.ToonOverzicht();
         }
 
