@@ -13,18 +13,12 @@ namespace SchoolAdmin
 
         public string Naam
         {
-            get
-            {
-                return naam;
-            }
+            get { return naam; }
         }
 
         public byte? Resultaat
         {
-            get
-            {
-                return resultaat;
-            }
+            get { return resultaat; }
             set
             {
                 if (value is not null || value >= 0 && value <= 20)

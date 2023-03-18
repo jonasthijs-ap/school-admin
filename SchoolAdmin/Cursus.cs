@@ -17,38 +17,23 @@ namespace SchoolAdmin
 
         public int Id
         {
-            get
-            {
-                return this.id;
-            }
+            get { return this.id; }
         }
 
         public string Titel
         {
-            get
-            {
-                return this.titel;
-            }
+            get { return this.titel; }
         }
 
         public byte Studiepunten
         {
-            get
-            {
-                return this.studiepunten;
-            }
-            private set
-            {
-                this.studiepunten = value;
-            }
+            get { return this.studiepunten; }
+            private set { this.studiepunten = value; }
         }
 
         public static Cursus[] AlleCursussen
         {
-            get
-            {
-                return alleCursussen;
-            }
+            get { return alleCursussen; }
         }
 
         public Cursus(string cursusNaam, byte aantalStudenten, byte studiepunten)
@@ -73,7 +58,7 @@ namespace SchoolAdmin
 
             for (int i = 0; i < alleCursussen.Length; i++)
             {
-                if (alleCursussen[i] is null && vrijePositie is not null)
+                if (alleCursussen[i] is null && vrijePositie is null)
                 {
                     vrijePositie = i;
                 }
@@ -100,6 +85,27 @@ namespace SchoolAdmin
                 }
             }
             Console.WriteLine();
+        }
+
+        public static Cursus? ZoekCursusOpId(int id)
+        {
+            for (int i = 0; i < AlleCursussen.Length; i++)
+            {
+                if (i + 1 == id && AlleCursussen[i] is null)
+                {
+                    return null;
+                }
+                else if (AlleCursussen[i] is null)
+                {
+                    //
+                }
+                else if (AlleCursussen[i].Id == id && AlleCursussen[i] is not null)
+                {
+                    return AlleCursussen[i];
+                }
+            }
+
+            return null;
         }
 
         public static void DemonstreerCursussen()
