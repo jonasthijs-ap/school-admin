@@ -48,12 +48,13 @@ namespace SchoolAdmin
             Cursus communicatie = new Cursus("Communicatie");
             Cursus programmeren = new Cursus("Programmeren");
             Cursus databanken = new Cursus("Databanken", new Student[7], 5);
-            Cursus[] cursussenPRO = { communicatie, programmeren, databanken };
-            Cursus[] cursussenSNB = { communicatie, programmeren };
+            Cursus[] cursussen1 = { communicatie, programmeren, databanken };
+            Cursus[] cursussen2 = { communicatie, programmeren };
             StudieProgramma programmerenProgramma = new StudieProgramma("Programmeren");
             StudieProgramma snbProgramma = new StudieProgramma("Systeem- en netwerkbeheer");
-            programmerenProgramma.cursussen = cursussenPRO;
-            snbProgramma.cursussen = cursussenSNB;
+            programmerenProgramma.cursussen = cursussen1;
+            snbProgramma.cursussen = cursussen2;
+            snbProgramma.cursussen[1] = new Cursus("Scripting");
             programmerenProgramma.ToonOverzicht();
             snbProgramma.ToonOverzicht();
         }
