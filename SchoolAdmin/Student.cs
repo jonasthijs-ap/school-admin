@@ -70,13 +70,13 @@ namespace SchoolAdmin
             }
         }
 
-        public void RegistreerCursusResultaat(string cursusNaam, byte? cijfer)
+        public void RegistreerCursusResultaat(Cursus cursus, byte? cijfer)
         {
             for (int i = 0; i < cursusResultaten.Length; i++)
             {
                 if (cursusResultaten[i] is null)
                 {
-                    cursusResultaten[i] = new VakInschrijving(cursusNaam, cijfer);
+                    cursusResultaten[i] = new VakInschrijving(cursus, cijfer);
                     break;
                 }
             }
@@ -91,7 +91,7 @@ namespace SchoolAdmin
             {
                 if (cursusResultaten[i] is not null)
                 {
-                    Console.WriteLine($"{cursusResultaten[i].Naam}:".PadRight(26) + cursusResultaten[i].Resultaat);
+                    Console.WriteLine($"{cursusResultaten[i].Cursus.Titel}:".PadRight(26) + cursusResultaten[i].Resultaat);
                 }
             }
 
@@ -105,7 +105,7 @@ namespace SchoolAdmin
 
             for (byte i = 4; i < studentInfo.Length; i += 2)
             {
-                student.RegistreerCursusResultaat(studentInfo[i], Convert.ToByte(studentInfo[i + 1]));
+                student.RegistreerCursusResultaat(new Cursus(studentInfo[i]), Convert.ToByte(studentInfo[i + 1]));
             }
 
             return student;
@@ -113,16 +113,21 @@ namespace SchoolAdmin
 
         public static void DemonstreerStudenten()
         {
+            Cursus communicatie = new Cursus("Communicatie");
+            Cursus programmeren = new Cursus("Programmeren", 6);
+            Cursus webtechnologie = new Cursus("Webtechnologie", 5, 6);
+            Cursus databanken = new Cursus("Databanken", 7, 5);
+
             Student said = new Student("Said Aziz", new DateTime(2001, 1, 3));
-            said.RegistreerCursusResultaat("Communicatie", 12);
-            said.RegistreerCursusResultaat("Programmeren", 15);
-            said.RegistreerCursusResultaat("Webtechnologie", 13);
+            said.RegistreerCursusResultaat(communicatie, 12);
+            said.RegistreerCursusResultaat(programmeren, 15);
+            said.RegistreerCursusResultaat(webtechnologie, 13);
             said.ToonOverzicht();
 
             Student mieke = new Student("Mieke Vermeulen", new DateTime(1996, 4, 23));
-            mieke.RegistreerCursusResultaat("Communicatie", 13);
-            mieke.RegistreerCursusResultaat("Databanken", 16);
-            mieke.RegistreerCursusResultaat("Programmeren", 14);
+            mieke.RegistreerCursusResultaat(communicatie, 13);
+            mieke.RegistreerCursusResultaat(databanken, 16);
+            mieke.RegistreerCursusResultaat(programmeren, 14);
             mieke.ToonOverzicht();
         }
 

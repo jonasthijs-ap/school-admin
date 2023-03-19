@@ -116,15 +116,15 @@ namespace SchoolAdmin
             Cursus databanken = new Cursus("Databanken", 7, 5);
 
             Student said = new Student("Said Aziz", new DateTime(2001, 1, 3));
-            said.RegistreerCursusResultaat("Communicatie", 12);
-            said.RegistreerCursusResultaat("Programmeren", null);
-            said.RegistreerCursusResultaat("Webtechnologie", 13);
+            said.RegistreerCursusResultaat(communicatie, 12);
+            said.RegistreerCursusResultaat(programmeren, null);
+            said.RegistreerCursusResultaat(webtechnologie, 13);
             said.ToonOverzicht();
 
             Student mieke = new Student("Mieke Vermeulen", new DateTime(1996, 4, 23));
-            mieke.RegistreerCursusResultaat("Communicatie", 13);
-            mieke.RegistreerCursusResultaat("Databanken", null);
-            mieke.RegistreerCursusResultaat("Programmeren", 14);
+            mieke.RegistreerCursusResultaat(communicatie, 13);
+            mieke.RegistreerCursusResultaat(databanken, null);
+            mieke.RegistreerCursusResultaat(programmeren, 14);
             mieke.ToonOverzicht();
 
             communicatie.Studenten[0] = said;
