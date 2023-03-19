@@ -115,8 +115,8 @@ namespace SchoolAdmin
         {
             Cursus communicatie = new Cursus("Communicatie");
             Cursus programmeren = new Cursus("Programmeren", 6);
-            Cursus webtechnologie = new Cursus("Webtechnologie", 5, 6);
-            Cursus databanken = new Cursus("Databanken", 7, 5);
+            Cursus webtechnologie = new Cursus("Webtechnologie", new Student[5], 6);
+            Cursus databanken = new Cursus("Databanken", new Student[7], 5);
 
             Student said = new Student("Said Aziz", new DateTime(2001, 1, 3));
             said.RegistreerCursusResultaat(communicatie, 12);
