@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,9 +16,9 @@ namespace SchoolAdmin
         public static uint Studententeller = 1;
 
         private static List<Student> alleStudenten = new List<Student>();
-        public static List<Student> AlleStudenten
+        public static ImmutableList<Student> AlleStudenten
         {
-            get { return alleStudenten; }
+            get { return alleStudenten.ToImmutableList(); }
         }
 
         public Student(string naam, DateTime geboorteDatum)
