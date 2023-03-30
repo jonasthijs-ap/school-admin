@@ -9,19 +9,22 @@ namespace SchoolAdmin
     internal class StudieProgramma
     {
         private string naam;
-        private Cursus[] cursussen;
-
         public string Naam
         {
             get { return naam; }
         }
 
-        public Cursus[] Cursussen
+        private List<Cursus> cursussen = new List<Cursus>();
+        public List<Cursus> Cursussen
         {
             get { return cursussen; }
             set
             {
-                if (value is not null)
+                if (value is null)
+                {
+                    Console.WriteLine("Null is niet toegelaten");
+                }
+                else
                 {
                     cursussen = value;
                 }
@@ -47,9 +50,9 @@ namespace SchoolAdmin
         {
             Cursus communicatie = new Cursus("Communicatie");
             Cursus programmeren = new Cursus("Programmeren");
-            Cursus databanken = new Cursus("Databanken", new Student[7], 5);
-            Cursus[] cursussen1 = { communicatie, programmeren, databanken };
-            Cursus[] cursussen2 = { communicatie, programmeren };
+            Cursus databanken = new Cursus("Databanken", new List<Student>(), 5);
+            List<Cursus> cursussen1 = new List<Cursus> { communicatie, programmeren, databanken };
+            List<Cursus> cursussen2 = new List<Cursus> { communicatie, programmeren };
             StudieProgramma programmerenProgramma = new StudieProgramma("Programmeren");
             StudieProgramma snbProgramma = new StudieProgramma("Systeem- en netwerkbeheer");
             programmerenProgramma.cursussen = cursussen1;

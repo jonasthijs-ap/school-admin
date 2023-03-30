@@ -9,7 +9,7 @@ namespace SchoolAdmin
 {
     internal class Student
     {
-        private VakInschrijving[] vakInschrijvingen = new VakInschrijving[5];
+        private List<VakInschrijving> vakInschrijvingen = new List<VakInschrijving>();
         public string Naam;
         public DateTime GeboorteDatum;
         public uint Studentennummer;
@@ -31,32 +31,24 @@ namespace SchoolAdmin
         public byte BepaalWerkbelasting()
         {
             byte totaal = 0;
-
-            for (int i = 0; i < this.vakInschrijvingen.Length; i++)
+            foreach (VakInschrijving vakInschrijving in vakInschrijvingen)
             {
-                if (this.vakInschrijvingen[i] is not null)
-                {
-                    totaal += 10;
-                }
+                totaal += 10;
             }
-
+            
             return totaal;
         }
 
-        public double Gemiddelde(VakInschrijving[] resultaten)
+        public double Gemiddelde()
         {
             double gemiddelde = 0.0;
             byte aantalCursussen = 0;
-
-            for (int i = 0; i < resultaten.Length; i++)
+            foreach (VakInschrijving vakInschrijving in vakInschrijvingen)
             {
-                if (resultaten[i] is not null)
-                {
-                    gemiddelde += Convert.ToDouble(resultaten[i].Resultaat);
-                    aantalCursussen++;
-                }
+                gemiddelde += Convert.ToDouble(vakInschrijving.Resultaat);
+                aantalCursussen++;
             }
-
+            
             gemiddelde /= aantalCursussen;
             return gemiddelde;
         }
@@ -78,16 +70,9 @@ namespace SchoolAdmin
             }
         }
 
-        public void RegistreerCursusResultaat(Cursus cursus, byte? cijfer)
+        public void RegistreerVakInschrijving(Cursus cursus, byte? cijfer)
         {
-            for (int i = 0; i < vakInschrijvingen.Length; i++)
-            {
-                if (vakInschrijvingen[i] is null)
-                {
-                    vakInschrijvingen[i] = new VakInschrijving(cursus, cijfer);
-                    break;
-                }
-            }
+            vakInschrijvingen.Add(new VakInschrijving(cursus, cijfer));
         }
 
         public void ToonOverzicht()
@@ -104,7 +89,7 @@ namespace SchoolAdmin
                 }
             }
             
-            Console.WriteLine($"Gemiddelde:".PadRight(26) + $"{Math.Round(Gemiddelde(vakInschrijvingen), 1)}\n");
+            Console.WriteLine($"Gemiddelde:".PadRight(26) + $"{Math.Round(this.Gemiddelde(), 1)}\n");
         }
 
         public static Student StudentUitTekstFormaat(string csvWaarde)
@@ -114,7 +99,7 @@ namespace SchoolAdmin
 
             for (byte i = 4; i < studentInfo.Length; i += 2)
             {
-                student.RegistreerCursusResultaat(new Cursus(studentInfo[i]), Convert.ToByte(studentInfo[i + 1]));
+                student.RegistreerVakInschrijving(new Cursus(studentInfo[i]), Convert.ToByte(studentInfo[i + 1]));
             }
 
             return student;
@@ -124,19 +109,19 @@ namespace SchoolAdmin
         {
             Cursus communicatie = new Cursus("Communicatie");
             Cursus programmeren = new Cursus("Programmeren", 6);
-            Cursus webtechnologie = new Cursus("Webtechnologie", new Student[5], 6);
-            Cursus databanken = new Cursus("Databanken", new Student[7], 5);
+            Cursus webtechnologie = new Cursus("Webtechnologie", new List<Student>(), 6);
+            Cursus databanken = new Cursus("Databanken", new List<Student>(), 5);
 
             Student said = new Student("Said Aziz", new DateTime(2001, 1, 3));
-            said.RegistreerCursusResultaat(communicatie, 12);
-            said.RegistreerCursusResultaat(programmeren, 15);
-            said.RegistreerCursusResultaat(webtechnologie, 13);
+            said.RegistreerVakInschrijving(communicatie, 12);
+            said.RegistreerVakInschrijving(programmeren, 15);
+            said.RegistreerVakInschrijving(webtechnologie, 13);
             said.ToonOverzicht();
 
             Student mieke = new Student("Mieke Vermeulen", new DateTime(1996, 4, 23));
-            mieke.RegistreerCursusResultaat(communicatie, 13);
-            mieke.RegistreerCursusResultaat(databanken, 16);
-            mieke.RegistreerCursusResultaat(programmeren, 14);
+            mieke.RegistreerVakInschrijving(communicatie, 13);
+            mieke.RegistreerVakInschrijving(databanken, 16);
+            mieke.RegistreerVakInschrijving(programmeren, 14);
             mieke.ToonOverzicht();
         }
 
