@@ -36,9 +36,9 @@ namespace SchoolAdmin
         public void ToonOverzicht()
         {
             Console.WriteLine($"Cursussen voor studieprogramma: '{Naam}'");
-            for (int i = 0; i < Cursussen.Length; i++)
+            foreach (Cursus cursus in Cursussen)
             {
-                Console.WriteLine($"-\t{Cursussen[i].Titel} ({Cursussen[i].Studiepunten} stp)");
+                Console.WriteLine($"-\t{cursus.Titel} ({cursus.Studiepunten} stp)");
             }
             Console.WriteLine();
         }

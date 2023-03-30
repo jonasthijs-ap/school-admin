@@ -8,7 +8,7 @@ namespace SchoolAdmin
 {
     internal class Student
     {
-        private VakInschrijving[] cursusResultaten = new VakInschrijving[5];
+        private VakInschrijving[] vakInschrijvingen = new VakInschrijving[5];
         public string Naam;
         public DateTime GeboorteDatum;
         public uint Studentennummer;
@@ -24,9 +24,9 @@ namespace SchoolAdmin
         {
             byte totaal = 0;
 
-            for (int i = 0; i < this.cursusResultaten.Length; i++)
+            for (int i = 0; i < this.vakInschrijvingen.Length; i++)
             {
-                if (this.cursusResultaten[i] is not null)
+                if (this.vakInschrijvingen[i] is not null)
                 {
                     totaal += 10;
                 }
@@ -66,17 +66,17 @@ namespace SchoolAdmin
             }
             else
             {
-                this.cursusResultaten[cursusIndex].Resultaat = behaaldCijfer;
+                this.vakInschrijvingen[cursusIndex].Resultaat = behaaldCijfer;
             }
         }
 
         public void RegistreerCursusResultaat(Cursus cursus, byte? cijfer)
         {
-            for (int i = 0; i < cursusResultaten.Length; i++)
+            for (int i = 0; i < vakInschrijvingen.Length; i++)
             {
-                if (cursusResultaten[i] is null)
+                if (vakInschrijvingen[i] is null)
                 {
-                    cursusResultaten[i] = new VakInschrijving(cursus, cijfer);
+                    vakInschrijvingen[i] = new VakInschrijving(cursus, cijfer);
                     break;
                 }
             }
@@ -87,15 +87,16 @@ namespace SchoolAdmin
             ushort age = Convert.ToUInt16(DateTime.Now.Year - this.GeboorteDatum.Year);
             Console.WriteLine($"{this.Naam}, {age} jaar\n");
             Console.WriteLine("Cijferrapport:\n**************");
-            for (int i = 0; i < cursusResultaten.Length; i++)
+
+            foreach (VakInschrijving vakInschrijving in vakInschrijvingen)
             {
-                if (cursusResultaten[i] is not null)
+                if (vakInschrijving is not null)
                 {
-                    Console.WriteLine($"{cursusResultaten[i].Cursus.Titel}:".PadRight(26) + cursusResultaten[i].Resultaat);
+                    Console.WriteLine($"{vakInschrijving.Cursus.Titel}:".PadRight(26) + vakInschrijving.Resultaat);
                 }
             }
-
-            Console.WriteLine($"Gemiddelde:".PadRight(26) + $"{Math.Round(Gemiddelde(cursusResultaten), 1)}\n");
+            
+            Console.WriteLine($"Gemiddelde:".PadRight(26) + $"{Math.Round(Gemiddelde(vakInschrijvingen), 1)}\n");
         }
 
         public static Student StudentUitTekstFormaat(string csvWaarde)
