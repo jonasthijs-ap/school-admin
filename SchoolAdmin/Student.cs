@@ -14,10 +14,17 @@ namespace SchoolAdmin
         public uint Studentennummer;
         public static uint Studententeller = 1;
 
+        private static List<Student> alleStudenten = new List<Student>();
+        public static List<Student> AlleStudenten
+        {
+            get { return alleStudenten; }
+        }
+
         public Student(string naam, DateTime geboorteDatum)
         {
             this.Naam = naam;
             this.GeboorteDatum = geboorteDatum;
+            alleStudenten.Add(this);
         }
 
         public byte BepaalWerkbelasting()
