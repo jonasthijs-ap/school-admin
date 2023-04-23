@@ -7,28 +7,47 @@ using System.Threading.Tasks;
 
 namespace SchoolAdmin
 {
-    internal class Student
+    public class Student : Persoon
     {
-        private List<VakInschrijving> vakInschrijvingen = new List<VakInschrijving>();
-        public string Naam;
-        public DateTime GeboorteDatum;
-        public uint Studentennummer;
-        public static uint Studententeller = 1;
-
+        // Static attributen & properties
         private static List<Student> alleStudenten = new List<Student>();
         public static ImmutableList<Student> AlleStudenten
         {
             get { return alleStudenten.ToImmutableList(); }
         }
 
-        public Student(string naam, DateTime geboorteDatum)
+
+
+        // Object attributen & properties
+        private List<VakInschrijving> vakInschrijvingen = new List<VakInschrijving>();
+
+
+        private Dictionary<DateTime, string> dossier = new Dictionary<DateTime, string>();
+        public ImmutableDictionary<DateTime, string> Dossier
         {
-            this.Naam = naam;
-            this.GeboorteDatum = geboorteDatum;
+            get { return dossier.ToImmutableDictionary(); }
+        }
+
+
+
+        /* ************************** */
+
+
+
+        // Constructors
+        public Student(string naam, DateTime geboorteDatum) : base(naam, geboorteDatum)
+        {
             alleStudenten.Add(this);
         }
 
-        public byte BepaalWerkbelasting()
+
+
+        /* ************************** */
+
+
+
+        // Object methoden
+        public override byte BepaalWerkbelasting()
         {
             byte totaal = 0;
             foreach (VakInschrijving vakInschrijving in vakInschrijvingen)
@@ -53,7 +72,7 @@ namespace SchoolAdmin
             return gemiddelde;
         }
 
-        public string GenereerNaamKaartje()
+        public override string GenereerNaamkaartje()
         {
             return $"{this.Naam} (STUDENT)";
         }
@@ -92,6 +111,9 @@ namespace SchoolAdmin
             Console.WriteLine($"Gemiddelde:".PadRight(26) + $"{Math.Round(this.Gemiddelde(), 1)}\n");
         }
 
+
+
+        // Static methoden
         public static Student StudentUitTekstFormaat(string csvWaarde)
         {
             string[] studentInfo = csvWaarde.Split(';');

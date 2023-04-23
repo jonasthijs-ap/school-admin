@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 
 namespace SchoolAdmin
 {
-    internal class StudieProgramma
+    public class StudieProgramma
     {
+        // Object attributen & properties
         private string naam;
         public string Naam
         {
             get { return naam; }
         }
+
 
         private List<Cursus> cursussen = new List<Cursus>();
         public List<Cursus> Cursussen
@@ -31,11 +33,25 @@ namespace SchoolAdmin
             }
         }
 
+
+
+        /* ************************** */
+
+
+
+        // Constructors
         public StudieProgramma(string naam)
         {
             this.naam = naam;
         }
 
+
+
+        /* ************************** */
+
+
+
+        // Object methoden
         public void ToonOverzicht()
         {
             Console.WriteLine($"Cursussen voor studieprogramma: '{Naam}'");
@@ -46,6 +62,9 @@ namespace SchoolAdmin
             Console.WriteLine();
         }
 
+
+
+        // Static methoden
         public static void DemonstreerStudieProgramma()
         {
             Cursus communicatie = new Cursus("Communicatie");

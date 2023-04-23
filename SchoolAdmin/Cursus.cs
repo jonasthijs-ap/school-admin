@@ -7,17 +7,31 @@ using System.Threading.Tasks;
 
 namespace SchoolAdmin
 {
-    internal class Cursus
+    public class Cursus
     {
+        // Static attributen & properties
+        private static List<Cursus> alleCursussen = new List<Cursus>();
+        public static ImmutableList<Cursus> AlleCursussen
+        {
+            get { return alleCursussen.ToImmutableList(); }
+        }
+
+
+
+        // Object attributen & properties
         public List<Student> Studenten = new List<Student>();
+
         public string Titel;
+
         private static int maxId = 1;
+
 
         private int id;
         public int Id
         {
             get { return this.id; }
         }
+
 
         private byte studiepunten;
         public byte Studiepunten
@@ -26,12 +40,13 @@ namespace SchoolAdmin
             private set { this.studiepunten = value; }
         }
 
-        private static List<Cursus> alleCursussen = new List<Cursus>();
-        public static ImmutableList<Cursus> AlleCursussen
-        {
-            get { return alleCursussen.ToImmutableList(); }
-        }
-        
+
+
+        /* ************************** */
+
+
+
+        // Constructors
         public Cursus(string cursusNaam, List<Student> aantalStudenten, byte studiepunten)
         {
             this.Titel = cursusNaam;
@@ -48,6 +63,13 @@ namespace SchoolAdmin
 
         public Cursus(string cursusNaam) : this(cursusNaam: cursusNaam, aantalStudenten: new List<Student>(), studiepunten: 3) { }
 
+
+
+        /* ************************** */
+
+
+
+        // Object methoden
         private static void registreerCursus(Cursus cursus)
         {
             alleCursussen.Add(cursus);
@@ -66,6 +88,9 @@ namespace SchoolAdmin
             Console.WriteLine();
         }
 
+
+
+        // Static methoden
         public static Cursus? ZoekCursusOpId(int id)
         {
             foreach (Cursus cursus in AlleCursussen)

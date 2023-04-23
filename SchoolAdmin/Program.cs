@@ -4,7 +4,7 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Wat wil je demonstreren?\n\t1. Studenten\n\t2. Cursussen\n\t3. StudentUitTekst\n\t4. Cursussen opzoeken op Id\n\t5. Studieprogramma");
+            Console.WriteLine("Wat wil je demonstreren?\n\t1. Studenten\n\t2. Cursussen\n\t3. StudentUitTekst\n\t4. Cursussen opzoeken op Id\n\t5. Studieprogramma\n\t6. Administratief personeel\n\t7. Lectoren");
             byte choice = Convert.ToByte(Console.ReadLine());
 
             switch (choice)
@@ -42,6 +42,14 @@
 
                 case 5:
                     StudieProgramma.DemonstreerStudieProgramma();
+                    break;
+
+                case 6:
+                    AdministratiefPersoneel.DemonstreerAdministratiefPersoneel();
+                    break;
+
+                case 7:
+                    Lector.DemonstreerLectoren();
                     break;
             }
         }

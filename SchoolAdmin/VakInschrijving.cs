@@ -6,16 +6,17 @@ using System.Threading.Tasks;
 
 namespace SchoolAdmin
 {
-    internal class VakInschrijving
+    public class VakInschrijving
     {
+        // Object attributen & properties
         private Cursus cursus;
-        private byte? resultaat;
-
         public Cursus Cursus
         {
             get { return cursus; }
         }
 
+
+        private byte? resultaat;
         public byte? Resultaat
         {
             get { return resultaat; }
@@ -28,6 +29,13 @@ namespace SchoolAdmin
             }
         }
 
+
+
+        /* ************************** */
+
+
+
+        // Constructors
         public VakInschrijving(Cursus cursus, byte? resultaat)
         {
             this.cursus = cursus;
