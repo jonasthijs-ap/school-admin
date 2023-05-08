@@ -16,8 +16,8 @@ namespace SchoolAdmin
         }
 
 
-        private List<Cursus> cursussen = new List<Cursus>();
-        public List<Cursus> Cursussen
+        private Dictionary<Cursus, byte> cursussen = new Dictionary<Cursus, byte>();
+        public Dictionary<Cursus, byte> Cursussen
         {
             get { return cursussen; }
             set
@@ -55,9 +55,9 @@ namespace SchoolAdmin
         public void ToonOverzicht()
         {
             Console.WriteLine($"Cursussen voor studieprogramma: '{Naam}'");
-            foreach (Cursus cursus in Cursussen)
+            foreach (var cursus in Cursussen)
             {
-                Console.WriteLine($"-\t{cursus.Titel} ({cursus.Studiepunten} stp)");
+                Console.WriteLine($"-\t{cursus.Key.Titel} ({cursus.Key.Studiepunten} stp)");
             }
             Console.WriteLine();
         }
@@ -70,13 +70,18 @@ namespace SchoolAdmin
             Cursus communicatie = new Cursus("Communicatie");
             Cursus programmeren = new Cursus("Programmeren");
             Cursus databanken = new Cursus("Databanken", 5);
-            List<Cursus> cursussen1 = new List<Cursus> { communicatie, programmeren, databanken };
-            List<Cursus> cursussen2 = new List<Cursus> { communicatie, programmeren };
+            Cursus scripting = new Cursus("Scripting");
+            
             StudieProgramma programmerenProgramma = new StudieProgramma("Programmeren");
+            programmerenProgramma.Cursussen.Add(communicatie, 1);
+            programmerenProgramma.Cursussen.Add(programmeren, 1);
+            programmerenProgramma.Cursussen.Add(databanken, 1);
+
             StudieProgramma snbProgramma = new StudieProgramma("Systeem- en netwerkbeheer");
-            programmerenProgramma.cursussen = cursussen1;
-            snbProgramma.cursussen = cursussen2;
-            snbProgramma.cursussen[1] = new Cursus("Scripting");
+            snbProgramma.Cursussen.Add(communicatie, 2);
+            snbProgramma.Cursussen.Add(programmeren, 1);
+            snbProgramma.Cursussen.Add(scripting, 1);
+
             programmerenProgramma.ToonOverzicht();
             snbProgramma.ToonOverzicht();
         }
