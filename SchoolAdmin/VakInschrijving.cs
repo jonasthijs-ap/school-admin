@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,11 +9,27 @@ namespace SchoolAdmin
 {
     public class VakInschrijving
     {
+        // Static attributen & properties
+        private static List<VakInschrijving> alleVakInschrijvingen = new List<VakInschrijving>();
+        public static ImmutableList<VakInschrijving> AlleVakInschrijvingen
+        {
+            get { return alleVakInschrijvingen.ToImmutableList(); }
+        }
+
+
+
         // Object attributen & properties
         private Cursus cursus;
         public Cursus Cursus
         {
             get { return cursus; }
+        }
+
+
+        private Student student;
+        public Student Student
+        {
+            get { return student; }
         }
 
 
@@ -36,10 +53,13 @@ namespace SchoolAdmin
 
 
         // Constructors
-        public VakInschrijving(Cursus cursus, byte? resultaat)
+        public VakInschrijving(Cursus cursus, Student student, byte? resultaat)
         {
             this.cursus = cursus;
+            this.student = student;
             this.Resultaat = resultaat;
+
+            alleVakInschrijvingen.Add(this);
         }
     }
 }

@@ -10,10 +10,21 @@ namespace SchoolAdmin
     public class Lector : Personeel
     {
         // Static attributen & properties
-        private static List<Lector> alleLectoren = new List<Lector>();
         public static ImmutableList<Lector> AlleLectoren
         {
-            get { return alleLectoren.ToImmutableList(); }
+            get
+            {
+                List<Lector> alleLectoren = new List<Lector>();
+                foreach (var persoon in AllePersonen)
+                {
+                    if (persoon is Lector)
+                    {
+                        alleLectoren.Add((Lector)persoon);
+                    }
+                }
+
+                return alleLectoren.ToImmutableList();
+            }
         }
 
 
@@ -30,7 +41,7 @@ namespace SchoolAdmin
         // Constructors
         public Lector(string naam, DateTime geboorteDatum, Dictionary<string, byte> taken) : base(naam, geboorteDatum, taken)
         {
-            alleLectoren.Add(this);
+            allePersonen.Add(this);
         }
 
 
@@ -98,6 +109,14 @@ namespace SchoolAdmin
                 Console.WriteLine($"\tSalaris: {lector.BerekenSalaris()} euro.");
                 Console.WriteLine($"\tWerkbelasting: {lector.BepaalWerkbelasting()} uur.\n");
             }
+        }
+
+
+
+        // System.Object overrides
+        public override string ToString()
+        {
+            return $"{base.ToString()}\nMeerbepaald, een lector";
         }
     }
 }

@@ -19,8 +19,6 @@ namespace SchoolAdmin
 
 
         // Object attributen & properties
-        public List<Student> Studenten = new List<Student>();
-
         public string Titel;
 
         private static int maxId = 1;
@@ -41,17 +39,54 @@ namespace SchoolAdmin
         }
 
 
+        public ImmutableList<VakInschrijving> VakInschrijvingen
+        {
+            get
+            {
+                List<VakInschrijving> temp = new List<VakInschrijving>();
+
+                foreach (VakInschrijving inschrijving in VakInschrijving.AlleVakInschrijvingen)
+                {
+                    if (inschrijving.Student.Equals(this))
+                    {
+                        temp.Add(inschrijving);
+                    }
+                }
+
+                return temp.ToImmutableList();
+            }
+        }
+
+
+        public ImmutableList<Student> Studenten
+        {
+            get
+            {
+                List<Student> temp = new List<Student>();
+
+                foreach (VakInschrijving inschrijving in VakInschrijving.AlleVakInschrijvingen)
+                {
+                    if (inschrijving.Cursus.Equals(this))
+                    {
+                        temp.Add(inschrijving.Student);
+                    }
+                }
+
+                return temp.ToImmutableList();
+            }
+        }
+
+
 
         /* ************************** */
 
 
 
         // Constructors
-        public Cursus(string cursusNaam, List<Student> aantalStudenten, byte studiepunten)
+        public Cursus(string cursusNaam, byte studiepunten)
         {
             this.Titel = cursusNaam;
             this.Studiepunten = studiepunten;
-            this.Studenten = aantalStudenten;
 
             this.id = maxId;
             maxId++;
@@ -59,9 +94,7 @@ namespace SchoolAdmin
             registreerCursus(this);
         }
 
-        public Cursus(string cursusNaam, byte studiepunten) : this(cursusNaam: cursusNaam, aantalStudenten: new List<Student>(), studiepunten: studiepunten) { }
-
-        public Cursus(string cursusNaam) : this(cursusNaam: cursusNaam, aantalStudenten: new List<Student>(), studiepunten: 3) { }
+        public Cursus(string cursusNaam) : this(cursusNaam: cursusNaam, studiepunten: 3) { }
 
 
 
@@ -108,8 +141,8 @@ namespace SchoolAdmin
         {
             Cursus communicatie = new Cursus("Communicatie");
             Cursus programmeren = new Cursus("Programmeren", 6);
-            Cursus webtechnologie = new Cursus("Webtechnologie", new List<Student>(), 6);
-            Cursus databanken = new Cursus("Databanken", new List<Student>(), 5);
+            Cursus webtechnologie = new Cursus("Webtechnologie", 6);
+            Cursus databanken = new Cursus("Databanken", 5);
 
             Student said = new Student("Said Aziz", new DateTime(2001, 1, 3));
             said.RegistreerVakInschrijving(communicatie, 12);
@@ -137,6 +170,36 @@ namespace SchoolAdmin
             programmeren.ToonOverzicht();
             webtechnologie.ToonOverzicht();
             databanken.ToonOverzicht();
+        }
+
+
+
+        // System.Object overrides
+        public override bool Equals(object? obj)
+        {
+            if (obj is null)
+            {
+                return false;
+            }
+            else if (GetType() != obj.GetType())
+            {
+                return false;
+            }
+            else
+            {
+                Cursus cursusObj = (Cursus)obj;
+                if (Id == cursusObj.Id)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return this.Id.GetHashCode();
         }
     }
 }

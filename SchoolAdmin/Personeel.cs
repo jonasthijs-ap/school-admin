@@ -10,10 +10,21 @@ namespace SchoolAdmin
     public abstract class Personeel : Persoon
     {
         // Static attributen & properties
-        private static List<Personeel> allePersoneel = new List<Personeel>();
         public static ImmutableList<Personeel> AllePersoneel
         {
-            get { return allePersoneel.ToImmutableList(); }
+            get
+            {
+                List<Personeel> allePersoneel = new List<Personeel>();
+                foreach (var persoon in AllePersonen)
+                {
+                    if (persoon is Personeel)
+                    {
+                        allePersoneel.Add((Personeel)persoon);
+                    }
+                }
+
+                return allePersoneel.ToImmutableList();
+            }
         }
 
 

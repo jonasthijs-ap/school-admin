@@ -10,22 +10,68 @@ namespace SchoolAdmin
     public class Student : Persoon
     {
         // Static attributen & properties
-        private static List<Student> alleStudenten = new List<Student>();
         public static ImmutableList<Student> AlleStudenten
         {
-            get { return alleStudenten.ToImmutableList(); }
+            get
+            {
+                List<Student> alleStudenten = new List<Student>();
+                foreach (var persoon in AllePersonen)
+                {
+                    if (persoon is Student)
+                    {
+                        alleStudenten.Add((Student)persoon);
+                    }
+                }
+
+                return alleStudenten.ToImmutableList();
+            }
         }
 
 
 
         // Object attributen & properties
-        private List<VakInschrijving> vakInschrijvingen = new List<VakInschrijving>();
-
-
         private Dictionary<DateTime, string> dossier = new Dictionary<DateTime, string>();
         public ImmutableDictionary<DateTime, string> Dossier
         {
             get { return dossier.ToImmutableDictionary(); }
+        }
+
+
+        public ImmutableList<VakInschrijving> VakInschrijvingen
+        {
+            get
+            {
+                List<VakInschrijving> temp = new List<VakInschrijving>();
+
+                foreach (VakInschrijving inschrijving in VakInschrijving.AlleVakInschrijvingen)
+                {
+                    if (inschrijving.Student.Equals(this))
+                    {
+                        temp.Add(inschrijving);
+                    }
+                }
+
+                return temp.ToImmutableList();
+            }
+        }
+
+
+        public ImmutableList<Cursus> Cursussen
+        {
+            get
+            {
+                List<Cursus> temp = new List<Cursus>();
+
+                foreach (VakInschrijving inschrijving in VakInschrijving.AlleVakInschrijvingen)
+                {
+                    if (inschrijving.Student.Equals(this))
+                    {
+                        temp.Add(inschrijving.Cursus);
+                    }
+                }
+
+                return temp.ToImmutableList();
+            }
         }
 
 
@@ -37,7 +83,7 @@ namespace SchoolAdmin
         // Constructors
         public Student(string naam, DateTime geboorteDatum) : base(naam, geboorteDatum)
         {
-            alleStudenten.Add(this);
+            allePersonen.Add(this);
         }
 
 
@@ -50,7 +96,7 @@ namespace SchoolAdmin
         public override byte BepaalWerkbelasting()
         {
             byte totaal = 0;
-            foreach (VakInschrijving vakInschrijving in vakInschrijvingen)
+            foreach (VakInschrijving vakInschrijving in VakInschrijvingen)
             {
                 totaal += 10;
             }
@@ -62,7 +108,7 @@ namespace SchoolAdmin
         {
             double gemiddelde = 0.0;
             byte aantalCursussen = 0;
-            foreach (VakInschrijving vakInschrijving in vakInschrijvingen)
+            foreach (VakInschrijving vakInschrijving in VakInschrijvingen)
             {
                 gemiddelde += Convert.ToDouble(vakInschrijving.Resultaat);
                 aantalCursussen++;
@@ -85,13 +131,13 @@ namespace SchoolAdmin
             }
             else
             {
-                this.vakInschrijvingen[cursusIndex].Resultaat = behaaldCijfer;
+                VakInschrijvingen[cursusIndex].Resultaat = behaaldCijfer;
             }
         }
 
         public void RegistreerVakInschrijving(Cursus cursus, byte? cijfer)
         {
-            vakInschrijvingen.Add(new VakInschrijving(cursus, cijfer));
+            new VakInschrijving(cursus, this, cijfer);
         }
 
         public void ToonOverzicht()
@@ -100,7 +146,7 @@ namespace SchoolAdmin
             Console.WriteLine($"{this.Naam}, {age} jaar\n");
             Console.WriteLine("Cijferrapport:\n**************");
 
-            foreach (VakInschrijving vakInschrijving in vakInschrijvingen)
+            foreach (VakInschrijving vakInschrijving in VakInschrijvingen)
             {
                 if (vakInschrijving is not null)
                 {
@@ -131,8 +177,8 @@ namespace SchoolAdmin
         {
             Cursus communicatie = new Cursus("Communicatie");
             Cursus programmeren = new Cursus("Programmeren", 6);
-            Cursus webtechnologie = new Cursus("Webtechnologie", new List<Student>(), 6);
-            Cursus databanken = new Cursus("Databanken", new List<Student>(), 5);
+            Cursus webtechnologie = new Cursus("Webtechnologie", 6);
+            Cursus databanken = new Cursus("Databanken", 5);
 
             Student said = new Student("Said Aziz", new DateTime(2001, 1, 3));
             said.RegistreerVakInschrijving(communicatie, 12);
@@ -153,6 +199,14 @@ namespace SchoolAdmin
             string csvWaarde = Console.ReadLine();
             Student student = StudentUitTekstFormaat(csvWaarde);
             student.ToonOverzicht();
+        }
+
+
+
+        // System.Object overrides
+        public override string ToString()
+        {
+            return $"{base.ToString()}\nMeerbepaald, een student";
         }
     }
 }

@@ -13,7 +13,7 @@ namespace SchoolAdmin
         private static uint maxId = 1;
 
 
-        private static List<Persoon> allePersonen = new List<Persoon>();
+        protected static List<Persoon> allePersonen = new List<Persoon>();
         public static ImmutableList<Persoon> AllePersonen
         {
             get { return allePersonen.ToImmutableList(); }
@@ -43,6 +43,15 @@ namespace SchoolAdmin
 			get { return geboorteDatum; }
 		}
 
+		public byte Leeftijd
+		{
+			get
+			{
+				byte leeftijd = (byte)(DateTime.Now.Year - GeboorteDatum.Year);
+				return Convert.ToByte(leeftijd);
+			}
+		}
+
 
 
         /* ************************** */
@@ -67,5 +76,46 @@ namespace SchoolAdmin
         // Abstract methoden
         public abstract string GenereerNaamkaartje();
 		public abstract byte BepaalWerkbelasting();
-	}
+
+
+
+        // System.Object overrides
+        public override string ToString()
+        {
+			string underline = "";
+			for (byte i = 0; i < GetType().Name.Length; i++)
+			{
+				underline += "-";
+			}
+
+			return $"{GetType().Name}\n{underline}\nNaam: {Naam}\nLeeftijd: {Leeftijd}";
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is null)
+			{
+				return false;
+			}
+			else if (GetType() != obj.GetType())
+			{
+				return false;
+			}
+			else
+			{
+				Persoon persoonObj = (Persoon)obj;
+				if (Id == persoonObj.Id)
+				{
+					return true;
+				}
+			}
+
+			return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return this.Id.GetHashCode();
+        }
+    }
 }

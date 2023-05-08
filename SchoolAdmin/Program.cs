@@ -51,6 +51,16 @@
                 case 7:
                     Lector.DemonstreerLectoren();
                     break;
+
+                default:
+                    Student student = new Student("Roel De Vriendt", new DateTime(2005, 5, 6));
+                    Console.WriteLine(student.ToString());
+                    Lector lector = new Lector("Hanna Seghers", new DateTime(1989, 7, 19), new Dictionary<string, byte>());
+                    Console.WriteLine(lector.ToString());
+                    Console.WriteLine(student.Equals(null));
+                    Console.WriteLine(student.Equals(student));
+                    Console.WriteLine(student.Equals(lector));
+                    break;
             }
         }
     }

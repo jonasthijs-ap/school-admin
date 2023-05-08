@@ -10,10 +10,21 @@ namespace SchoolAdmin
     public class AdministratiefPersoneel : Personeel
     {
         // Static attributen & properties
-        private static List<AdministratiefPersoneel> alleAdministratiefPersoneel = new List<AdministratiefPersoneel>();
         public static ImmutableList<AdministratiefPersoneel> AlleAdministratiefPersoneel
         {
-            get { return alleAdministratiefPersoneel.ToImmutableList(); }
+            get
+            {
+                List<AdministratiefPersoneel> alleAdministratiefPersoneel = new List<AdministratiefPersoneel>();
+                foreach (var persoon in AllePersonen)
+                {
+                    if (persoon is AdministratiefPersoneel)
+                    {
+                        alleAdministratiefPersoneel.Add((AdministratiefPersoneel)persoon);
+                    }
+                }
+
+                return alleAdministratiefPersoneel.ToImmutableList();
+            }
         }
 
 
@@ -25,7 +36,7 @@ namespace SchoolAdmin
         // Constructors
         public AdministratiefPersoneel(string naam, DateTime geboorteDatum, Dictionary<string, byte> taken) : base(naam, geboorteDatum, taken)
         {
-            alleAdministratiefPersoneel.Add(this);
+            allePersonen.Add(this);
         }
 
 
@@ -90,6 +101,14 @@ namespace SchoolAdmin
                 Console.WriteLine($"\tSalaris: {personeel.BerekenSalaris()} euro.");
                 Console.WriteLine($"\tWerkbelasting: {personeel.BepaalWerkbelasting()} uur.\n");
             }
+        }
+
+
+
+        // System.Object overrides
+        public override string ToString()
+        {
+            return $"{base.ToString()}\nMeerbepaald, administratief personeel";
         }
     }
 }
