@@ -4,6 +4,7 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SchoolAdmin.CustomExceptions;
 
 namespace SchoolAdmin
 {
@@ -85,10 +86,17 @@ namespace SchoolAdmin
         // Constructors
         public Cursus(string cursusNaam, byte studiepunten)
         {
-            this.Titel = cursusNaam;
-            this.Studiepunten = studiepunten;
+            foreach (Cursus cursus in AlleCursussen)
+            {
+                if (cursusNaam == cursus.Titel)
+                {
+                    throw new DuplicateDataException("Nieuwe cursus heeft dezelfde naam als een bestaande cursus.", this, cursus);
+                }
+            }
 
-            this.id = maxId;
+            Titel = cursusNaam;
+            Studiepunten = studiepunten;
+            id = maxId;
             maxId++;
 
             registreerCursus(this);
@@ -143,7 +151,7 @@ namespace SchoolAdmin
             Cursus programmeren = new Cursus("Programmeren", 6);
             Cursus webtechnologie = new Cursus("Webtechnologie", 6);
             Cursus databanken = new Cursus("Databanken", 5);
-
+                
             Student said = new Student("Said Aziz", new DateTime(2001, 1, 3));
             said.RegistreerVakInschrijving(communicatie, 12);
             said.RegistreerVakInschrijving(programmeren, null);
@@ -155,17 +163,7 @@ namespace SchoolAdmin
             mieke.RegistreerVakInschrijving(databanken, null);
             mieke.RegistreerVakInschrijving(programmeren, 14);
             mieke.ToonOverzicht();
-
-            communicatie.Studenten.Add(said);
-            communicatie.Studenten.Add(mieke);
-
-            programmeren.Studenten.Add(said);
-            programmeren.Studenten.Add(mieke);
-
-            webtechnologie.Studenten.Add(mieke);
-
-            databanken.Studenten.Add(said);
-
+            
             communicatie.ToonOverzicht();
             programmeren.ToonOverzicht();
             webtechnologie.ToonOverzicht();
