@@ -55,6 +55,19 @@ namespace SchoolAdmin
         // Constructors
         public VakInschrijving(Cursus cursus, Student student, byte? resultaat)
         {
+            if (cursus is null || student is null)
+            {
+                throw new ArgumentException("Vakinschrijvingen mogen geen lege waarden voor 'cursus' en 'student' hebben.");
+            }
+
+            foreach (VakInschrijving vakInschrijving in AlleVakInschrijvingen)
+            {
+                if (vakInschrijving.Cursus.Equals(cursus))
+                {
+                    throw new ArgumentException("Student mag niet meermaals toegevoegd worden aan dezelfde cursus.");
+                }
+            }
+            
             this.cursus = cursus;
             this.student = student;
             this.Resultaat = resultaat;

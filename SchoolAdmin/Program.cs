@@ -46,6 +46,10 @@ namespace SchoolAdmin
                             {
                                 Console.WriteLine(e.Message + $"\nID van bestaande, overlappende cursus:\t{((Cursus)e.BestaandeCursus).Id}");
                             }
+                            catch (ArgumentException e)
+                            {
+                                Console.WriteLine(e.Message);
+                            }
                             break;
 
                         case 2:
@@ -56,6 +60,10 @@ namespace SchoolAdmin
                             catch (DuplicateDataException e)
                             {
                                 Console.WriteLine(e.Message + $"\nID van bestaande, overlappende cursus:\t{((Cursus)e.BestaandeCursus).Id}");
+                            }
+                            catch (ArgumentException e)
+                            {
+                                Console.WriteLine(e.Message);
                             }
                             break;
 
@@ -73,6 +81,10 @@ namespace SchoolAdmin
                             catch (DuplicateDataException e)
                             {
                                 Console.WriteLine(e.Message + $"\nID van bestaande, overlappende cursus:\t{((Cursus)e.BestaandeCursus).Id}");
+                            }
+                            catch (ArgumentException e)
+                            {
+                                Console.WriteLine(e.Message);
                             }
 
                             Console.WriteLine("Geef een cursus Id:");
@@ -98,6 +110,10 @@ namespace SchoolAdmin
                             {
                                 Console.WriteLine(e.Message + $"\nID van bestaande, overlappende cursus:\t{((Cursus)e.BestaandeCursus).Id}");
                             }
+                            catch (ArgumentException e)
+                            {
+                                Console.WriteLine(e.Message);
+                            }
                             break;
 
                         case 6:
@@ -112,6 +128,10 @@ namespace SchoolAdmin
                             catch (DuplicateDataException e)
                             {
                                 Console.WriteLine(e.Message + $"\nID van bestaande, overlappende cursus:\t{((Cursus)e.BestaandeCursus).Id}");
+                            }
+                            catch (ArgumentException e)
+                            {
+                                Console.WriteLine(e.Message);
                             }
                             break;
 
@@ -149,39 +169,53 @@ namespace SchoolAdmin
                         case 10:
                             // Interactie aanmaken nieuwe vakinschrijving
 
-                            Console.WriteLine("Welke student?");
-                            for (byte i = 0; i < Student.AlleStudenten.Count; i++)
+                            try
                             {
-                                Console.WriteLine($"[{i + 1}]{Student.AlleStudenten[i].Naam.PadLeft(3 + Student.AlleStudenten.Count.ToString().Length + 1)}");
-                            }
-                            uint studentId = Convert.ToUInt32(Console.ReadLine());
-                            for (byte i = 0; i < Student.AlleStudenten.Count; i++)
-                            {
-                                if (Student.AlleStudenten[i].Id == studentId)
+                                Console.WriteLine("Welke student?");
+                                for (byte i = 0; i < Student.AlleStudenten.Count; i++)
                                 {
-                                    Console.WriteLine(Student.AlleStudenten[i].ToString());
-                                    studentId = (uint)i;
+                                    Console.WriteLine($"[{i + 1}]{Student.AlleStudenten[i].Naam.PadLeft(3 + Student.AlleStudenten.Count.ToString().Length + 1)}");
+                                }
+                                uint studentId = Convert.ToUInt32(Console.ReadLine());
+                                for (byte i = 0; i < Student.AlleStudenten.Count; i++)
+                                {
+                                    if (Student.AlleStudenten[i].Id == studentId)
+                                    {
+                                        Console.WriteLine(Student.AlleStudenten[i].ToString());
+                                        studentId = (uint)i;
+                                    }
+                                }
+
+                                Console.WriteLine("Welke cursus?");
+                                for (byte i = 0; i < Cursus.AlleCursussen.Count; i++)
+                                {
+                                    Console.WriteLine($"[{i + 1}]{Cursus.AlleCursussen[i].Titel.PadLeft(3 + Cursus.AlleCursussen.Count.ToString().Length + 1)}");
+                                }
+                                uint cursusId = Convert.ToUInt32(Console.ReadLine());
+
+                                if (studentId == 0 || cursusId == 0)
+                                {
+                                    new VakInschrijving(null, null, null);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Wil je een resultaat toevoegen?");
+                                    string antwoord = Console.ReadLine();
+                                    if (antwoord.ToLower() == "ja")
+                                    {
+                                        Console.WriteLine("Wat is het resultaat?");
+                                        byte resultaat = Convert.ToByte(Console.ReadLine());
+                                        new VakInschrijving(Cursus.AlleCursussen[(int)(cursusId - 1)], Student.AlleStudenten[(int)studentId - 1], resultaat);
+                                    }
+                                    else
+                                    {
+                                        new VakInschrijving(Cursus.AlleCursussen[(int)(cursusId - 1)], Student.AlleStudenten[(int)studentId - 1], null);
+                                    }
                                 }
                             }
-
-                            Console.WriteLine("Welke cursus?");
-                            for (byte i = 0; i < Cursus.AlleCursussen.Count; i++)
+                            catch (ArgumentException e)
                             {
-                                Console.WriteLine($"[{i + 1}]{Cursus.AlleCursussen[i].Titel.PadLeft(3 + Cursus.AlleCursussen.Count.ToString().Length + 1)}");
-                            }
-                            uint cursusId = Convert.ToUInt32(Console.ReadLine());
-
-                            Console.WriteLine("Wil je een resultaat toevoegen?");
-                            string antwoord = Console.ReadLine();
-                            if (antwoord.ToLower() == "ja")
-                            {
-                                Console.WriteLine("Wat is het resultaat?");
-                                byte resultaat = Convert.ToByte(Console.ReadLine());
-                                new VakInschrijving(Cursus.AlleCursussen[(int)(cursusId - 1)], Student.AlleStudenten[(int)studentId - 1], resultaat);
-                            }
-                            else
-                            {
-                                new VakInschrijving(Cursus.AlleCursussen[(int)(cursusId - 1)], Student.AlleStudenten[(int)studentId - 1], null);
+                                Console.WriteLine(e.Message);
                             }
                             break;
 
