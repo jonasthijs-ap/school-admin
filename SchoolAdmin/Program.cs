@@ -182,7 +182,6 @@ namespace SchoolAdmin
                                     if (Student.AlleStudenten[i].Id == studentId)
                                     {
                                         Console.WriteLine(Student.AlleStudenten[i].ToString());
-                                        studentId = (uint)i;
                                     }
                                 }
 
@@ -231,6 +230,27 @@ namespace SchoolAdmin
                                     Console.WriteLine($"- {cursus.Titel}");
                                 }
                             }
+                            break;
+
+                        case 12:
+                            try
+                            {
+                                Cursus programmeren = new Cursus("Programmeren");
+                                for (byte i = 0; i <= 22; i++)
+                                {
+                                    new Student("Test", new DateTime(2000, 1, 1));
+                                }
+
+                                foreach (Student student in Student.AlleStudenten)
+                                {
+                                    new VakInschrijving(programmeren, student, null);
+                                }
+                            }
+                            catch (CapaciteitOverschredenException e)
+                            {
+                                Console.WriteLine(e.Message);
+                            }
+
                             break;
                     }
                 }

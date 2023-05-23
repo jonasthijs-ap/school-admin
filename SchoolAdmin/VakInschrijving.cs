@@ -4,6 +4,7 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SchoolAdmin.CustomExceptions;
 
 namespace SchoolAdmin
 {
@@ -60,9 +61,19 @@ namespace SchoolAdmin
                 throw new ArgumentException("Vakinschrijvingen mogen geen lege waarden voor 'cursus' en 'student' hebben.");
             }
 
+            byte aantalCursussen = 0;
             foreach (VakInschrijving vakInschrijving in AlleVakInschrijvingen)
             {
-                if (vakInschrijving.Cursus.Equals(cursus))
+                if (vakInschrijving.Cursus.Equals(cursus) && vakInschrijving.Resultaat is null)
+                {
+                    aantalCursussen++;
+
+                    if (aantalCursussen >= 20)
+                    {
+                        throw new CapaciteitOverschredenException("Maximumcapaciteit is overschreden. Elk vak kan slechts 20 vakinschrijvingen tegelijk hebben.");
+                    }
+                }
+                else if (vakInschrijving.Student.Cursussen.Contains(cursus))
                 {
                     throw new ArgumentException("Student mag niet meermaals toegevoegd worden aan dezelfde cursus.");
                 }
