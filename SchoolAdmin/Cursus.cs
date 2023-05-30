@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SchoolAdmin.CustomExceptions;
+using SchoolAdmin.Interfaces;
 
 namespace SchoolAdmin
 {
-    public class Cursus
+    public class Cursus : ICSVSerializable
     {
         // Static attributen & properties
         private static List<Cursus> alleCursussen = new List<Cursus>();
@@ -127,6 +128,11 @@ namespace SchoolAdmin
                 }
             }
             Console.WriteLine();
+        }
+
+        public string ToCSV()
+        {
+            return $"{GetType().Name};{Id};\"{Titel}\";{Studiepunten}";
         }
 
 

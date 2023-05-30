@@ -80,5 +80,18 @@ namespace SchoolAdmin
 
         // Abstract methoden
         public abstract uint BerekenSalaris();
+
+
+
+        // Object methoden
+        public string ToCSV()
+        {
+            string taken = "";
+            foreach (var taak in Taken)
+            {
+                taken += ";\"" + taak.Key + "\";" + taak.Value;
+            }
+            return $"{base.ToCSV()}{taken}";
+        }
     }
 }

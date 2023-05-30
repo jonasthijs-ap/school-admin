@@ -85,6 +85,16 @@ namespace SchoolAdmin
             return (uint)(loon * tewerkstellingsbreuk);
         }
 
+        public string ToCSV()
+        {
+            string cursussen = "";
+            foreach (var cursus in this.cursussen)
+            {
+                cursussen += ";" + cursus.Key + ";" + cursus.Value;
+            }
+            return $"{base.ToCSV()}{cursussen}";
+        }
+
 
 
         // Static methoden

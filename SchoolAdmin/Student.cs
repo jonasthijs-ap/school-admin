@@ -157,6 +157,16 @@ namespace SchoolAdmin
             Console.WriteLine($"Gemiddelde:".PadRight(26) + $"{Math.Round(this.Gemiddelde(), 1)}\n");
         }
 
+        public string ToCSV()
+        {
+            string dossier = "";
+            foreach (var data in Dossier)
+            {
+                dossier += ";" + data.Key.ToString("d") + ";\"" + data.Value + "\"";
+            }
+            return $"{base.ToCSV()}{dossier}";
+        }
+
 
 
         // Static methoden

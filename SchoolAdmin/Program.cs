@@ -24,7 +24,8 @@ namespace SchoolAdmin
                     "Vakinschrijving toevoegen",
                     "Inschrijvingsgegevens tonen",
                     "Studenten tonen",
-                    "Cursussen tonen"
+                    "Cursussen tonen",
+                    "Alle exporteerbare data exporteren"
                 };
 
                 Console.WriteLine("Wat wil je demonstreren?");
@@ -243,6 +244,18 @@ namespace SchoolAdmin
                             break;
 
                         case 14:
+                            foreach (Cursus cursus in Cursus.AlleCursussen)
+                            {
+                                Console.WriteLine(cursus.ToCSV());
+                            }
+
+                            foreach (Persoon persoon in Persoon.AllePersonen)
+                            {
+                                Console.WriteLine(persoon.ToCSV());
+                            }
+                            break;
+
+                        case 15:
                             try
                             {
                                 Cursus programmeren = new Cursus("Programmeren");

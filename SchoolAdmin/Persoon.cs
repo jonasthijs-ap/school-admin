@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SchoolAdmin.Interfaces;
 
 namespace SchoolAdmin
 {
-    public abstract class Persoon
+    public abstract class Persoon : ICSVSerializable
     {
 		// Static attributen & properties
         private static uint maxId = 1;
@@ -76,6 +78,14 @@ namespace SchoolAdmin
         // Abstract methoden
         public abstract string GenereerNaamkaartje();
 		public abstract byte BepaalWerkbelasting();
+
+
+
+		// Object methoden
+		public string ToCSV()
+		{
+			return $"{GetType().Name};{Id};\"{Naam}\";{GeboorteDatum.ToString(new CultureInfo("nl-BE"))}";
+		}
 
 
 
