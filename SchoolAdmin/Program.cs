@@ -22,7 +22,9 @@ namespace SchoolAdmin
                     "Student toevoegen",
                     "Cursus toevoegen",
                     "Vakinschrijving toevoegen",
-                    "Inschrijvingsgegevens tonen"
+                    "Inschrijvingsgegevens tonen",
+                    "Studenten tonen",
+                    "Cursussen tonen"
                 };
 
                 Console.WriteLine("Wat wil je demonstreren?");
@@ -233,6 +235,14 @@ namespace SchoolAdmin
                             break;
 
                         case 12:
+                            Student.ToonStudenten();
+                            break;
+
+                        case 13:
+                            Cursus.ToonCursussen();
+                            break;
+
+                        case 14:
                             try
                             {
                                 Cursus programmeren = new Cursus("Programmeren");

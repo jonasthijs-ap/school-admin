@@ -201,6 +201,31 @@ namespace SchoolAdmin
             student.ToonOverzicht();
         }
 
+        public static void ToonStudenten()
+        {
+            IComparer<Student> comparer = null;
+            Console.WriteLine("In welke volgorde wil je studenten tonen?");
+            Console.WriteLine("1. Stijgend alfabetisch\n2. Dalend alfabetisch");
+            byte keuze = Convert.ToByte(Console.ReadLine());
+
+            switch (keuze)
+            {
+                case 1:
+                    comparer = new StudentVolgensNaamOplopendComparer();
+                    break;
+
+                case 2:
+                    comparer = new StudentVolgensNaamAflopendComparer();
+                    break;
+            }
+
+            ImmutableList<Student> alleStudentenGesorteerd = AlleStudenten.Sort(comparer);
+            foreach (Student student in alleStudentenGesorteerd)
+            {
+                Console.WriteLine(student.ToString());
+            }
+        }
+
 
 
         // System.Object overrides

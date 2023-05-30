@@ -170,6 +170,32 @@ namespace SchoolAdmin
             databanken.ToonOverzicht();
         }
 
+        public static void ToonCursussen()
+        {
+            IComparer<Cursus> comparer = null;
+
+            Console.WriteLine("In welke volgorde wil je cursussen tonen?");
+            Console.WriteLine("1. Stijgend alfabetisch\n2. Volgens studiepunten");
+            byte keuze = Convert.ToByte(Console.ReadLine());
+
+            switch (keuze)
+            {
+                case 1:
+                    comparer = new CursusVolgensTitelOplopendComparer();
+                    break;
+
+                case 2:
+                    comparer = new CursusVolgensStudiepuntenOplopendComparer();
+                    break;
+            }
+
+            ImmutableList<Cursus> alleCursussenGesorteerd = AlleCursussen.Sort(comparer);
+            foreach (Cursus cursus in alleCursussenGesorteerd)
+            {
+                Console.WriteLine(cursus.ToString());
+            }
+        }
+
 
 
         // System.Object overrides
@@ -198,6 +224,11 @@ namespace SchoolAdmin
         public override int GetHashCode()
         {
             return this.Id.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return $"Cursus {Titel} heeft {Studiepunten} studiepunten";
         }
     }
 }
